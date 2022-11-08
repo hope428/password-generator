@@ -125,14 +125,16 @@ function generatePassword() {
   }
 
   //creates array of characters based on user preferences
-  var passwordCharactersArray = []
+  var passwordCharactersArray = [];
 
   if (includeLowercase) {
-    passwordCharactersArray = passwordCharactersArray.concat(lowercaseCharacters);
+    passwordCharactersArray =
+      passwordCharactersArray.concat(lowercaseCharacters);
   }
 
   if (includeUppercase) {
-    passwordCharactersArray = passwordCharactersArray.concat(uppercaseCharacters);
+    passwordCharactersArray =
+      passwordCharactersArray.concat(uppercaseCharacters);
   }
 
   if (includeSpecial) {
@@ -143,10 +145,16 @@ function generatePassword() {
     passwordCharactersArray = passwordCharactersArray.concat(numericCharacters);
   }
 
-  //
+  //generate password based on user preferences array
+
+  var password = "";
+
+  for (let i = 0; i < length; i++) {
+    password = password + passwordCharactersArray[Math.floor(Math.random() * passwordCharactersArray.length)];
+  }
+
   return password;
 }
-
 
 //Adds password to box
 function writePassword() {
