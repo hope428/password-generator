@@ -98,8 +98,7 @@ var specialCharacters = [
 ];
 var numericCharacters = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
-//gets users preferences
-function generatePassword() {
+function getPreferences() {
   length = prompt("Enter password length between 8 and 128");
 
   //validates user selected length
@@ -123,6 +122,12 @@ function generatePassword() {
     alert("At least one character type must be selected");
     return;
   }
+}
+
+//gets users preferences
+function generatePassword() {
+  //call function to set up preferences
+  getPreferences();
 
   //creates array of characters based on user preferences
   var passwordCharactersArray = [];
@@ -150,7 +155,11 @@ function generatePassword() {
   var password = "";
 
   for (let i = 0; i < length; i++) {
-    password = password + passwordCharactersArray[Math.floor(Math.random() * passwordCharactersArray.length)];
+    password =
+      password +
+      passwordCharactersArray[
+        Math.floor(Math.random() * passwordCharactersArray.length)
+      ];
   }
 
   return password;
