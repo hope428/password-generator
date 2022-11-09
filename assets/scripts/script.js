@@ -105,30 +105,26 @@ function getPreferences() {
   if (length < 8 || length > 128) {
     alert("Please enter a number between 8 and 128");
     return;
-  }
+  } else {
+    includeLowercase = confirm("Do you want lowercase letters?");
+    includeUppercase = confirm("Do you want uppercase letters?");
+    includeSpecial = confirm("Do you want special characters?");
+    includeNumeric = confirm("Do you want numbers?");
 
-  includeLowercase = confirm("Do you want lowercase letters?");
-  includeUppercase = confirm("Do you want uppercase letters?");
-  includeSpecial = confirm("Do you want special characters?");
-  includeNumeric = confirm("Do you want numbers?");
-
-  //validates user input
-  if (
-    !includeLowercase &&
-    !includeUppercase &&
-    !includeSpecial &&
-    !includeNumeric
-  ) {
-    alert("At least one character type must be selected");
-    return;
+    //validates user input
+    if (
+      !includeLowercase &&
+      !includeUppercase &&
+      !includeSpecial &&
+      !includeNumeric
+    ) {
+      alert("At least one character type must be selected");
+      return;
+    }
   }
 }
 
-//gets users preferences
-function generatePassword() {
-  //call function to set up preferences
-  getPreferences();
-
+function createArray() {
   //creates array of characters based on user preferences
   var passwordCharactersArray = [];
 
@@ -150,19 +146,31 @@ function generatePassword() {
     passwordCharactersArray = passwordCharactersArray.concat(numericCharacters);
   }
 
+  return passwordCharactersArray;
+}
+
+//gets users preferences
+function generatePassword() {
+  //call function to set up preferences
+  getPreferences();
   //generate password based on user preferences array
-
-  var password = "";
-
-  for (let i = 0; i < length; i++) {
-    password =
-      password +
-      passwordCharactersArray[
-        Math.floor(Math.random() * passwordCharactersArray.length)
-      ];
+  if (
+    length >= 8 &&
+    length <= 128 &&
+    (includeLowercase || includeNumeric || includeSpecial || includeUppercase)
+  ) {
+    var characterArray = createArray();
+    var password = "";
+    for (let i = 0; i < length; i++) {
+      password =
+        password +
+        characterArray[Math.floor(Math.random() * characterArray.length)];
+    }
+    return password;
+  } else {
+    password = ""
+    return password
   }
-
-  return password;
 }
 
 //Adds password to box
