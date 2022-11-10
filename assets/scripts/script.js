@@ -184,7 +184,7 @@ function generatePassword() {
   ) {
     //calls create Array function
     var characterArray = createArray();
-    for (let i = 4; i < passwordPreferences.length; i++) {
+    for (let i = password.length; i < passwordPreferences.length; i++) {
       password =
         password +
         characterArray[Math.floor(Math.random() * characterArray.length)];
@@ -198,6 +198,7 @@ function generatePassword() {
 
 //Adds password to box
 function writePassword() {
+  password = ""
   password = generatePassword();
   console.log(password)
 
