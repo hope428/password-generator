@@ -110,7 +110,7 @@ function getPreferences() {
   //validates user selected length
   if (passwordPreferences.length < 8 || passwordPreferences.length > 128) {
     alert("Please enter a number between 8 and 128");
-    return;
+    return; //validate user input is a number
   } else if (isNaN(passwordPreferences.length)) {
     alert("Enter a valid number");
   } else {
@@ -125,7 +125,7 @@ function getPreferences() {
     );
     passwordPreferences.includeNumeric = confirm("Do you want numbers?");
 
-    //validates user input
+    //validates user selected at least one field
     if (
       !passwordPreferences.includeLowercase &&
       !passwordPreferences.includeUppercase &&
@@ -140,31 +140,43 @@ function getPreferences() {
 
 function createArray() {
   //creates array of characters based on user preferences
+  //populates empty password with one character of each field selected
   var passwordCharactersArray = [];
 
   if (passwordPreferences.includeLowercase) {
     passwordCharactersArray =
       passwordCharactersArray.concat(lowercaseCharacters);
-      password = password + lowercaseCharacters[Math.floor(Math.random()* lowercaseCharacters.length)]
+    password =
+      password +
+      lowercaseCharacters[
+        Math.floor(Math.random() * lowercaseCharacters.length)
+      ];
   }
 
   if (passwordPreferences.includeUppercase) {
     passwordCharactersArray =
       passwordCharactersArray.concat(uppercaseCharacters);
-      password = password + uppercaseCharacters[Math.floor(Math.random()* lowercaseCharacters.length)]
+    password =
+      password +
+      uppercaseCharacters[
+        Math.floor(Math.random() * lowercaseCharacters.length)
+      ];
   }
 
   if (passwordPreferences.includeSpecial) {
     passwordCharactersArray = passwordCharactersArray.concat(specialCharacters);
-    password = password + specialCharacters[Math.floor(Math.random()* specialCharacters.length)]
+    password =
+      password +
+      specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
   }
 
   if (passwordPreferences.includeNumeric) {
     passwordCharactersArray = passwordCharactersArray.concat(numericCharacters);
-    password = password + numericCharacters[Math.floor(Math.random()* numericCharacters.length)]
+    password =
+      password +
+      numericCharacters[Math.floor(Math.random() * numericCharacters.length)];
   }
-
-  console.log(password)
+  
   return passwordCharactersArray;
 }
 
@@ -198,9 +210,10 @@ function generatePassword() {
 
 //Adds password to box
 function writePassword() {
-  password = ""
+  //resets password every time the user presses generate password
+  password = "";
   password = generatePassword();
-  console.log(password)
+  console.log(password);
 
   var passwordText = document.querySelector("#password");
 
