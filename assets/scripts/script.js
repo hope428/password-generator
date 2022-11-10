@@ -1,10 +1,13 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var length;
-var includeLowercase;
-var includeUppercase;
-var includeSpecial;
-var includeNumeric;
+
+var passwordPreferences = {
+  length: 0,
+  includeLowercase: false,
+  includeUppercase: false,
+  includeSpecial: false,
+  includeNumeric: false,
+};
 
 var lowercaseCharacters = [
   "a",
@@ -99,24 +102,34 @@ var specialCharacters = [
 var numericCharacters = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
 function getPreferences() {
-  length = prompt("Enter password length between 8 and 128");
+  passwordPreferences.length = prompt(
+    "Enter password length between 8 and 128"
+  );
 
   //validates user selected length
-  if (length < 8 || length > 128) {
+  if (passwordPreferences.length < 8 || passwordPreferences.length > 128) {
     alert("Please enter a number between 8 and 128");
     return;
+  } else if (isNaN(passwordPreferences.length)) {
+    alert("Enter a valid number");
   } else {
-    includeLowercase = confirm("Do you want lowercase letters?");
-    includeUppercase = confirm("Do you want uppercase letters?");
-    includeSpecial = confirm("Do you want special characters?");
-    includeNumeric = confirm("Do you want numbers?");
+    passwordPreferences.includeLowercase = confirm(
+      "Do you want lowercase letters?"
+    );
+    passwordPreferences.includeUppercase = confirm(
+      "Do you want uppercase letters?"
+    );
+    passwordPreferences.includeSpecial = confirm(
+      "Do you want special characters?"
+    );
+    passwordPreferences.includeNumeric = confirm("Do you want numbers?");
 
     //validates user input
     if (
-      !includeLowercase &&
-      !includeUppercase &&
-      !includeSpecial &&
-      !includeNumeric
+      !passwordPreferences.includeLowercase &&
+      !passwordPreferences.includeUppercase &&
+      !passwordPreferences.includeSpecial &&
+      !passwordPreferences.includeNumeric
     ) {
       alert("At least one character type must be selected");
       return;
@@ -128,21 +141,21 @@ function createArray() {
   //creates array of characters based on user preferences
   var passwordCharactersArray = [];
 
-  if (includeLowercase) {
+  if (passwordPreferences.includeLowercase) {
     passwordCharactersArray =
       passwordCharactersArray.concat(lowercaseCharacters);
   }
 
-  if (includeUppercase) {
+  if (passwordPreferences.includeUppercase) {
     passwordCharactersArray =
       passwordCharactersArray.concat(uppercaseCharacters);
   }
 
-  if (includeSpecial) {
+  if (passwordPreferences.includeSpecial) {
     passwordCharactersArray = passwordCharactersArray.concat(specialCharacters);
   }
 
-  if (includeNumeric) {
+  if (passwordPreferences.includeNumeric) {
     passwordCharactersArray = passwordCharactersArray.concat(numericCharacters);
   }
 
@@ -154,22 +167,27 @@ function generatePassword() {
   //call function to set up preferences
   getPreferences();
   //generate password based on user preferences array
+  //if check to only run password if length is valid and at least one criteria is selected
   if (
-    length >= 8 &&
-    length <= 128 &&
-    (includeLowercase || includeNumeric || includeSpecial || includeUppercase)
+    passwordPreferences.length >= 8 &&
+    passwordPreferences.length <= 128 &&
+    (passwordPreferences.includeLowercase ||
+      passwordPreferences.includeNumeric ||
+      passwordPreferences.includeSpecial ||
+      passwordPreferences.includeUppercase)
   ) {
+    //calls create Array function
     var characterArray = createArray();
     var password = "";
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < passwordPreferences.length; i++) {
       password =
         password +
         characterArray[Math.floor(Math.random() * characterArray.length)];
     }
     return password;
   } else {
-    password = ""
-    return password
+    password = "";
+    return password;
   }
 }
 
