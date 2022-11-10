@@ -1,6 +1,7 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+var password = "";
 var passwordPreferences = {
   length: 0,
   includeLowercase: false,
@@ -144,21 +145,26 @@ function createArray() {
   if (passwordPreferences.includeLowercase) {
     passwordCharactersArray =
       passwordCharactersArray.concat(lowercaseCharacters);
+      password = password + lowercaseCharacters[Math.floor(Math.random()* lowercaseCharacters.length)]
   }
 
   if (passwordPreferences.includeUppercase) {
     passwordCharactersArray =
       passwordCharactersArray.concat(uppercaseCharacters);
+      password = password + uppercaseCharacters[Math.floor(Math.random()* lowercaseCharacters.length)]
   }
 
   if (passwordPreferences.includeSpecial) {
     passwordCharactersArray = passwordCharactersArray.concat(specialCharacters);
+    password = password + specialCharacters[Math.floor(Math.random()* specialCharacters.length)]
   }
 
   if (passwordPreferences.includeNumeric) {
     passwordCharactersArray = passwordCharactersArray.concat(numericCharacters);
+    password = password + numericCharacters[Math.floor(Math.random()* numericCharacters.length)]
   }
 
+  console.log(password)
   return passwordCharactersArray;
 }
 
@@ -178,8 +184,7 @@ function generatePassword() {
   ) {
     //calls create Array function
     var characterArray = createArray();
-    var password = "";
-    for (let i = 0; i < passwordPreferences.length; i++) {
+    for (let i = 4; i < passwordPreferences.length; i++) {
       password =
         password +
         characterArray[Math.floor(Math.random() * characterArray.length)];
@@ -193,7 +198,8 @@ function generatePassword() {
 
 //Adds password to box
 function writePassword() {
-  var password = generatePassword();
+  password = generatePassword();
+  console.log(password)
 
   var passwordText = document.querySelector("#password");
 
